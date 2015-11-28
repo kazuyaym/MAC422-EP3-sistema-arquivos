@@ -1,0 +1,73 @@
+/***********************************************************/
+/*                                                         */
+/*     MAC0422 - Sistemas Operacionais                     */
+/*     Professor: Daniel Batista                           */
+/*                                                         */
+/*     Marcos Yamazaki          7577622                    */
+/*     Caio Lopes               7991187                    */
+/*                                                         */
+/*     Data: 22/Novembro/2015                              */
+/*     LEIAME.txt                                          */
+/*                                                         */
+/***********************************************************/
+
+O nosso programa foi escrito em Python 2.7
+
+Para executar o nosso programa basta digitar na linha do comando:
+$ python ep3.py
+
+No nosso programa, foi construido uma simulação de sistemas de arquivos,
+nossa partição possui bloco de 4Kbytes (no sistemas Unix 4 Kbytes = 4000 bytes)
+
+Reservamos em nosso "disco rigido":
+
+1 bloco para o Super Bloco, onde temos a informação gravada do espaço livre no disco
+13 blocos para os ponteiros fat
+1 bloco para o bitmap, nesse bloco, os bits estão representados como 0 -> ocupados
+                                                                     1 -> livre
+1 bloco para o root, onde contem os metadados do root e dos diretórios/arquivos dentro dela
+25985 blocos reservados para diretorios ou arquivos
+
+As funções implementadas nesse Exercício-Programa foram:
+ # mount
+ # cp
+ # mkdir
+ # cat
+ # touch
+ # rm
+ # ls
+ # umount
+ # sair
+ 
+O arquivo gerado em mount, quando não há um arquivo já existente,
+no começo ela só gera um arquivo de tamanho com 16 blocos, e para
+cada arquivo/diretório colocado no "disco rígido", alocaremos
+dinamicamente essa memória.
+
+No comando cp, há a necessidade de especificar o NOME do arquivo
+que será gerado no sistema simulado.
+Por exemplo, se queremos copiar o arquivo HarryPotter no sistema,
+e adicionar dentro da pasta /temp:
+
+[ep3]: ls /
+2015-11-21 17:35     [dir] temp/
+2015-11-21 17:35    492132 text
+2015-11-21 17:36       162 text3
+
+Fazemos o comando:
+[ep3]: cp /home/username/HarryPotter /temp/NOME_DO_ARQUIVO
+
+No comando ls, diferenciamos os diretórios com os arquivos de duas formas,
+como não temos o tamanho em byte que um diretório ocupa, mostramos os diretórios 
+da seguinte forma:
+
+yyyy-mm-dd hh:mm    [dir] <Nome_do_diretorio>/
+
+No tamanho, ao invés do tamanho em bytes, imprimimos [dir]
+e no nome adicionamos um '/'
+E no caso de arquivos, apenas imprimimos o nome do arquivo puro,
+além de colocar o tamanho dele ocupado em bytes.
+
+O tamanho de um arquivo quando copiamos ela para o sistema de arquivos
+ela contém o último byte '\0', e por isso, pode acontencer de que quando 
+um arquivo de 16 byes é copiado para dentro do sistema, ela ocupe 17 bytes.
